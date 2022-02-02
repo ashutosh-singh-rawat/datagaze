@@ -8,7 +8,9 @@ module Datagaze::Models
       models.map do |model|
        
         path, line_no = ApplicationRecord.const_source_location(model.to_s)
-        table_name    = model.table_name
+        
+        table_prefix  = model.table_name_prefix
+        table_name    = table_prefix ? (table_prefix + model.table_name) :  model.table_name
         
         { model => { path: path, table_name: table_name } }
 
